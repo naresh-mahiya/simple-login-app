@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import { 
+  View, 
+  Text, 
+  StyleSheet, 
+  ActivityIndicator,
+  TouchableOpacity,
+  ScrollView
+} from 'react-native';
 
 const Profile = ({ route }) => {
   const [userData, setUserData] = useState(null);
@@ -46,60 +53,101 @@ const Profile = ({ route }) => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.headerText}>Profile</Text>
+    <ScrollView style={styles.container}>
+      <View style={styles.contentContainer}>
+        <Text style={styles.headerText}>Profile</Text>
 
-      {loading ? (
-        <ActivityIndicator size="large" color="#3498db" />
-      ) : error ? (
-        <Text style={styles.errorText}>{error}</Text>
-      ) : (
-        <>
-          <View style={styles.profileCard}>
-            <Text style={styles.profileText}>Username: {userData.username}</Text>
-            <Text style={styles.profileText}>Email: {userData.email}</Text>
+        {loading ? (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#3498db" />
           </View>
-        </>
-      )}
-    </View>
+        ) : error ? (
+          <View style={styles.errorContainer}>
+            <Text style={styles.errorText}>{error}</Text>
+          </View>
+        ) : (
+          <View style={styles.profileCard}>
+            <View style={styles.infoContainer}>
+              <Text style={styles.label}>Username</Text>
+              <Text style={styles.value}>{userData?.username}</Text>
+            </View>
+            
+            <View style={styles.divider} />
+            
+            <View style={styles.infoContainer}>
+              <Text style={styles.label}>Email</Text>
+              <Text style={styles.value}>{userData?.email}</Text>
+            </View>
+          </View>
+        )}
+      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#121212',
-    padding: 20,
+    backgroundColor: '#f8f9fa',
+  },
+  contentContainer: {
+    flex: 1,
+    padding: 25,
   },
   headerText: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#fff',
-    marginBottom: 20,
+    color: '#2c3e50',
+    marginBottom: 30,
+    marginTop: 20,
   },
-  profileCard: {
-    backgroundColor: '#1e1e1e',
-    padding: 20,
-    borderRadius: 15,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 6,
-    elevation: 6,
-    width: '100%',
-    maxWidth: 400,
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    minHeight: 200,
   },
-  profileText: {
-    fontSize: 18,
-    color: '#fff',
-    marginBottom: 12,
+  errorContainer: {
+    backgroundColor: '#fde8e8',
+    padding: 15,
+    borderRadius: 12,
+    marginTop: 20,
   },
   errorText: {
+    color: '#e74c3c',
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  profileCard: {
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    padding: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 5,
+  },
+  infoContainer: {
+    marginBottom: 15,
+  },
+  label: {
+    fontSize: 14,
+    color: '#7f8c8d',
+    marginBottom: 5,
+  },
+  value: {
     fontSize: 18,
-    color: 'red',
-    marginTop: 10,
+    color: '#2c3e50',
+    fontWeight: '500',
+  },
+  divider: {
+    height: 1,
+    backgroundColor: '#e0e0e0',
+    marginVertical: 15,
   },
 });
 

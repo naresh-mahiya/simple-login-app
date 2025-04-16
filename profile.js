@@ -5,16 +5,41 @@ import {
   StyleSheet, 
   ActivityIndicator,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
+  Alert
 } from 'react-native';
 
-const Profile = ({ route }) => {
+const Profile = ({ route, navigation }) => {
   const [userData, setUserData] = useState(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
 
   const backendUrl = "http://192.168.137.76:3000"; // replace with actual IP
   const token = route.params?.token;
+
+  const handleLogout = () => {
+    Alert.alert(
+      "Logout",
+      "Are you sure you want to logout?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel"
+        },
+        {
+          text: "Logout",
+          onPress: () => {
+            // Clear any stored tokens or user data here if needed
+            navigation.reset({
+              index: 0,
+              routes: [{ name: 'Login' }],
+            });
+          },
+          style: "destructive"
+        }
+      ]
+    );
+  };
 
   const profiledetails = () => {
     if (!token) {
@@ -55,7 +80,15 @@ const Profile = ({ route }) => {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.contentContainer}>
-        <Text style={styles.headerText}>Profile</Text>
+        <View style={styles.headerContainer}>
+          <Text style={styles.headerText}>Profile</Text>
+          <TouchableOpacity 
+            style={styles.logoutButton}
+            onPress={handleLogout}
+          >
+            <Text style={styles.logoutButtonText}>Logout</Text>
+          </TouchableOpacity>
+        </View>
 
         {loading ? (
           <View style={styles.loadingContainer}>
@@ -94,12 +127,36 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 25,
   },
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 30,
+    marginTop: 20,
+  },
   headerText: {
     fontSize: 28,
     fontWeight: 'bold',
     color: '#2c3e50',
-    marginBottom: 30,
-    marginTop: 20,
+  },
+  logoutButton: {
+    backgroundColor: '#e74c3c',
+    paddingHorizontal: 15,
+    paddingVertical: 8,
+    borderRadius: 8,
+    shadowColor: '#e74c3c',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  logoutButtonText: {
+    color: '#fff',
+    fontWeight: '600',
+    fontSize: 14,
   },
   loadingContainer: {
     flex: 1,

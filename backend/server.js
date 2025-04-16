@@ -13,7 +13,7 @@ app.get("/", (req, res) => {
     res.send("this is listening");
 });
 
-connect("mongodb://localhost:27017/appWardrobe");
+connect("mongodb://127.0.0.1:27017/loginapp");
 
 app.use("/auth", authRoutes);
 app.use("/user",profileRoutes)

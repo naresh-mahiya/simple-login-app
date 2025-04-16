@@ -17,7 +17,7 @@ const Auth = ({ navigation }) => {
   const [signingup, setsigning] = useState(false);
   const [logging, setlogging] = useState(false);
 
-  const apiUrl = 'http://192.168.110.73:3000'; // Replace with actual
+  const apiUrl = 'http://192.168.137.76:3000'; // Replace with actual
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -86,7 +86,7 @@ const Auth = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>
-        {toggle ? 'Sign Up to Outfit-AI' : 'Login to Outfit-AI'}
+        {toggle ? 'Sign Up to Test app' : 'Login to Test app'}
       </Text>
 
       {error ? <Text style={styles.error}>{error}</Text> : null}

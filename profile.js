@@ -6,7 +6,7 @@ const Profile = ({ route }) => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
 
-  const backendUrl = "http://192.168.110.73:3000"; // replace with actual IP
+  const backendUrl = "http://192.168.137.76:3000"; // replace with actual IP
   const token = route.params?.token;
 
   const profiledetails = () => {
